@@ -76,13 +76,8 @@ If you've got this far, everything is working fine and you
 should be able to integrate the sessionprofile app with your
 own project.
 
+-------------------------------------------------------------------------------
 
+Any problems?  Let us know at
 
-
-
-
-
-
-
-
-
+    django-php-auth@resolversystems.com
