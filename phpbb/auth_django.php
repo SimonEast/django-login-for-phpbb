@@ -30,7 +30,7 @@ function init_django()
   global $user;
 
   $djangoUser = GetDjangoUser();
-  if (!isset($djangoUser) || strtolower($user->data['username']) !== strtolower($djangoUser))
+  if (!isset($djangoUser) || strtolower($user->data['username']) !== strtolower($djangoUser['username']))
   {
     return "You cannot set up Django authentication unless you are logged into Django";
   }
@@ -63,7 +63,7 @@ function login_django(&$username, &$password)
     );
   }
 
-  $php_auth_user = strtolower($djangoUser);
+  $php_auth_user = strtolower($djangoUser['username']);
   $php_auth_pw = "pretend password";
 
   if (!empty($php_auth_user) && !empty($php_auth_pw))
@@ -135,12 +135,14 @@ function autologin_django()
     return array();
   }
 
-  $php_auth_user = strtolower($djangoUser);
+  $php_auth_user = strtolower($djangoUser['username']);
+  $php_auth_email = $djangoUser['email'];
   $php_auth_pw = "pretend password";
 
   if (!empty($php_auth_user) && !empty($php_auth_pw))
   {
     set_var($php_auth_user, $php_auth_user, 'string');
+    set_var($php_auth_email, $php_auth_email, 'string');
     set_var($php_auth_pw, $php_auth_pw, 'string');
 
     $sql = 'SELECT *
@@ -163,7 +165,7 @@ function autologin_django()
     }
 
     // create the user if he does not exist yet
-    user_add(user_row_django($php_auth_user, $php_auth_pw));
+    user_add(user_row_django($php_auth_user, $php_auth_pw, $php_auth_email));
 
     $sql = 'SELECT *
       FROM ' . USERS_TABLE . "
@@ -184,7 +186,7 @@ function autologin_django()
 /**
 * This function generates an array which can be passed to the user_add function in order to create a user
 */
-function user_row_django($username, $password)
+function user_row_django($username, $password, $email)
 {
   global $db, $config, $user;
   // first retrieve default group id
@@ -205,7 +207,7 @@ function user_row_django($username, $password)
   return array(
     'username'    => $username,
     'user_password' => phpbb_hash($password),
-    'user_email'  => '',
+    'user_email'  => $email,
     'group_id'    => (int) $row['group_id'],
     'user_type'   => USER_NORMAL,
     'user_ip'   => $user->ip,
@@ -226,7 +228,7 @@ function validate_session_django(&$user)
   }
 
   $php_auth_user = '';
-  set_var($php_auth_user, strtolower($djangoUser), 'string');
+  set_var($php_auth_user, strtolower($djangoUser['username']), 'string');
 
   return ($php_auth_user === strtolower($user['username'])) ? true : false;
 }

@@ -24,10 +24,10 @@ function GetDjangoUser()
 
     $dbSession = GetDBSession();
     $query =
-      "SELECT auth_user.username as username ".
-      "  FROM auth_user, usermanagement_sessionprofile " .
-      " WHERE usermanagement_sessionprofile.session_id = '" . mysql_real_escape_string($djangoSessionID) . "' " .
-      "   AND auth_user.id = usermanagement_sessionprofile.user_id";
+      "SELECT auth_user.username as username, auth_user.email as email ".
+      "  FROM auth_user, sessionprofile_sessionprofile sp" .
+      " WHERE sp.session_id = '" . mysql_real_escape_string($djangoSessionID) . "' " .
+      "   AND auth_user.id = sp.user_id";
     $queryID = mysql_query($query, $dbSession);
 
     if (!$queryID)
@@ -38,7 +38,7 @@ function GetDjangoUser()
     $row = mysql_fetch_array($queryID);
     if ($row)
     {
-      return $row["username"];
+      return $row;
     }
 
     return null;
