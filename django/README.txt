@@ -1,12 +1,16 @@
 This directory contains a Django application called sessionprofile.  Add it
 to your project to make it maintain a table that maps sessions to user
 objects.  This is useful when you want to access the current session's
-Django user ID - for example, when you are integrating Django with phpBB.
+Django user ID from outside Django - for example, when you are integrating
+Django with phpBB.
 
-Install it by executing python setup.py install
+Install it by executing
+
+    python setup.py install
+
 
 The following instructions show how to create a minimal project that does
-nothing but test this.
+nothing but test the install.
 
 1. You will need to modify the settings.py of your project
 

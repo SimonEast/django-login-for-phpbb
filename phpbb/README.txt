@@ -23,16 +23,32 @@ In order to use these:
 1. Put getdjangouser.php somewhere on your PHP include path.  Modify it to set
    the DBUSERNAME, DBPASSWORD, and DATABASENAME to match the settings for your
    Django installation.
+
 2. Put auth_django.php inside your phpBB installation, under includes/auth.
+
 3. Modify the links to the login and register pages inside login_body.html to
    match the appropriate ones for your Django installation, then use it to
    replace the login_body.html associated with your current phpBB style
    (probably in styles/something/template).
-4. Make sure you have a Django user who has the same username as an
+
+4. IMPORTANT: edit the file adm/index.php under the phpBB root, and remove the
+   lines that require you to log in a second time to go to the administration
+   panel; they are (in my version) lines 31-34, and look like this:
+
+     if (!isset($user->data['session_admin']) || !$user->data['session_admin'])
+     {
+        login_box('', $user->lang['LOGIN_ADMIN_CONFIRM'], $user->lang['LOGIN_ADMIN_SUCCESS'], true, false);
+     }
+
+
+5. Make sure you have a Django user who has the same username as an
    administrator of the phpBB forums.
-5. Log into Django as that user.
-6. Log into phpBB as that user.
-7. Use the phpBB administration panel to set the authentication module to
+
+6. Log into Django as that user.
+
+7. Log into phpBB as that user.
+
+8. Use the phpBB administration panel to set the authentication module to
 auth_django.
 
 That should do the trick!

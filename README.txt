@@ -21,7 +21,7 @@ are people you really would like to have as phpBB administrators!
 The codebase comprises two sections:
 
 * The django code.  This is a Django app called sessionprofile.  Its README.txt
-  tells you how to add it to your project.  We recomment you look at this bit
+  tells you how to add it to your project.  We recommend you look at this bit
   first.
 
 * The phpBB code.  This needs to be installed in your phpBB directory; details
