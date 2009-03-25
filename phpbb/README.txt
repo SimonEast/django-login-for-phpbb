@@ -29,7 +29,8 @@ In order to use these:
 3. Modify the links to the login and register pages inside login_body.html to
    match the appropriate ones for your Django installation, then use it to
    replace the login_body.html associated with your current phpBB style
-   (probably in styles/something/template).
+   (probably in styles/something/template).  Make similar changes to
+   your template's viewforum_body.html
 
 4. IMPORTANT: edit the file adm/index.php under the phpBB root, and remove the
    lines that require you to log in a second time to go to the administration
@@ -49,7 +50,7 @@ In order to use these:
 7. Log into phpBB as that user.
 
 8. Use the phpBB administration panel to set the authentication module to
-auth_django.
+   auth_django.
 
 That should do the trick!
 
