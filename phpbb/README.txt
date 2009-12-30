@@ -1,12 +1,18 @@
 This directory contains the PHP code you need to make phpBB recognise users who
-are logged into your website using Django.  There are three files:
+are logged into your website using Django.  There are four files:
 
-* getdjangouser.php.  This file provides a function that returns the Django
-  username of the logged in user, or null if no-one is logged in.
+* getdjangouser_mysql.php.  This file is for people who are using MySQL as their
+  database, and provides a function that returns the Django username of the
+  logged in user, or null if no-one is logged in.
 
-* auth_django.php.  This file uses getdjangouser.php to  make all of your
-  Django users into valid phpBB users.  If someone logs into your site using
-  Django, then goes to your forums for the first time, they will be
+* getdjangouser_postgresql.php.  This file is for people who are using
+  PostgreSQL as their database, and provides a function that returns the Django
+  username of the logged in user, or null if no-one is logged in.  (Thanks to
+  Russ Neufeld for porting this from MySQL.)
+
+* auth_django.php.  This file uses one of the getdjangouser files to  make all
+  of your Django users into valid phpBB users.  If someone logs into your site
+  using Django, then goes to your forums for the first time, they will be
   automatically registered and logged in to the forums.  When they visit in
   the future, if they are logged into your Django installation they will
   also be logged into phpBB.
@@ -20,9 +26,11 @@ are logged into your website using Django.  There are three files:
 
 In order to use these:
 
-1. Put getdjangouser.php somewhere on your PHP include path.  Modify it to set
-   the DBUSERNAME, DBPASSWORD, and DATABASENAME to match the settings for your
-   Django installation.
+1. Take a copy of either getdjangouser_mysql.php or
+   getdjangouser_postgresql.php, depending on which database you're using, and
+   rename it to getdjangouser.php.  Put it somewhere on your PHP include path,
+   and modify it to set the DBUSERNAME, DBPASSWORD, and DATABASENAME to match
+   the settings for your Django installation.
 
 2. Put auth_django.php inside your phpBB installation, under includes/auth.
 
