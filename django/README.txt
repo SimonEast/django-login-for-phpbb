@@ -53,6 +53,13 @@ If you've got this far, everything is working fine and you
 should be able to integrate the sessionprofile app with your
 own project.
 
+You may also want to take advantage of the extra
+cleanup_inactive_sessions.py command, which removes all
+expired Django sessions and their associated entries in
+the sessionprofile_sessionprofile table.  It was written by
+Russ Neufeld and should be run from cron instead of Django's
+session cleaner.
+
 -------------------------------------------------------------------------------
 
 Any problems?  Let us know at
