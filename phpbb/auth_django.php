@@ -221,16 +221,23 @@ function user_row_django($username, $password, $email)
 */
 function validate_session_django(&$user)
 {
+
   $djangoUser = GetDjangoUser();
-  if (!isset($djangoUser))
+  if (isset($djangoUser))
   {
-    return false;
+    $php_auth_user = '';
+    set_var($php_auth_user, strtolower($djangoUser['username']), 'string');
+
+    return ($php_auth_user === strtolower($user['username'])) ? true : false;
   }
 
-  $php_auth_user = '';
-  set_var($php_auth_user, strtolower($djangoUser['username']), 'string');
+  // django cookie is not set. A valid session is now determined by the user type (anonymous/bot or not)
+  if ($user['user_type'] == USER_IGNORE)
+    {
+      return true;
+    }
 
-  return ($php_auth_user === strtolower($user['username'])) ? true : false;
+  return false;
 }
 
-?>
+
